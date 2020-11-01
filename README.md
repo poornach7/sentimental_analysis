@@ -35,7 +35,7 @@ main.py - is the main program.
 <li>Matplotlib</li>
 </ul>
 
-##Authors
+## Authors
 Dominic Griffin <br>
 Matt Joseph Berberich <br>
 Poorna Chandra Gopal <br>
