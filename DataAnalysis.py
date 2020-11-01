@@ -100,4 +100,5 @@ class DataAnalysis(object):
         plt.tight_layout()
         plt.show()
 
-# def generateWordCloud(self):
+    #TODO : generate wordcloud for trending tweets in the past 7 days
+    # def generateWordCloud(self):

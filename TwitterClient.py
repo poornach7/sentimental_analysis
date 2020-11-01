@@ -31,3 +31,6 @@ class TwitterClient(object):
         for tweet in fetched_tweets_obj:
             tweets[tweet.id] = tweet.full_text
         return tweets
+
+    #TODO: Implement a method to fetch tweets from past 7 days and process them to identfy the treandng topic
+    #TODO: Implement a method to fetch tweets from past 7 days in a specific location and process them to identfy the treandng topic at a particualar locaton

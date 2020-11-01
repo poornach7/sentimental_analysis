@@ -26,9 +26,6 @@ class Tools(object):
             #shortword = re.compile(r'\W*\b\w{1,3}\b')
             #cleanTweet = shortword.sub('', cleanTweet)
             cleanTweet.lower()
-            # make the tweets lower case
-            # TODO make the dict as a key to list pair.
-
             cleaned_tweets[tweet_id] = cleanTweet
         return cleaned_tweets
 
@@ -42,3 +39,5 @@ class Tools(object):
                 writer.writerow([tweet_id, tweet[0], tweet[1]])
         except:
             print("Error: Unable to write to csv")
+
+    #TODO: Tokenize the cleaned tweet using NLTK for better natural language processing
