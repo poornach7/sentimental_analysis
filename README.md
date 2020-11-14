@@ -15,6 +15,11 @@ User will be prompted to enter Keyword/Tag to search about and number of tweets 
 A pie chart will be generated to visualize the analysis. <br>
 The analysed tweets are stored in a file in the same directory.<br>
 
+## Required packages
+run the following command to install the required packages for the project:
+
+`pip install -r requirements.txt`
+
 ## Modules
 TwitterClient.py - is responsible to authenticate the user on twitter dev portal. Once the user is authenticated, user will be able to fetch tweets based on the search query. <br>
 Tools.py - methods/functions which are required to manipulate the data. Functions like cleaning the data, tokenize the tweets, writing the data to a csv file and etc.
