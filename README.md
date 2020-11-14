@@ -23,7 +23,7 @@ main.py - is the main program.
 
 ##### TODO:
 1. Implement a method in TwitterClient class to support fetch tweets of past 7 days and generate a word cloud to determine most trending topic of the week.<br> 
-2. Improve the cleaning algorithm to avoid any bad or un wanted data in Tools class<br>
+2. Improve the cleaning algorithm to avoid any bad or unwanted data in Tools class<br>
 3. Tokenize the data and reImplement sentiment analysis using Natural Language Toolkit (NLTK).<br>
 4. Implement a wordcloud and display the trending topics in the part 7 days.
 
