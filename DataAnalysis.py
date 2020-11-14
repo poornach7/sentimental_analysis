@@ -16,28 +16,36 @@ class DataAnalysis(object):
         self.tweets = tweets
         self.NoOfTerms = len(tweets)
 
-    def sentimentAnalysis(self, search_term):
+    def sentimentAnalysis(self, searchTerm):
         # creating some variables to store info
         # iterating through tweets fetched
-        for tweet_id in self.tweets:
-            analysis = TextBlob(self.tweets[tweet_id])
+        tweetSentiment = dict()
+        for tweetId in self.tweets:
+            analysis = TextBlob(self.tweets[tweetId])
 
             self.polarity += analysis.sentiment.polarity
 
             if analysis.sentiment.polarity == 0:
                 self.neutral += 1
+                tweetSentiment[tweetId] = "Neutral"
             elif 0 < analysis.sentiment.polarity <= 0.3:
                 self.weak_positive += 1
+                tweetSentiment[tweetId] = "Weakly Positive"
             elif 0.3 < analysis.sentiment.polarity <= 0.6:
                 self.positive += 1
+                tweetSentiment[tweetId] = "Positive"
             elif 0.6 < analysis.sentiment.polarity <= 1:
                 self.strong_positive += 1
+                tweetSentiment[tweetId] = "Strongly Positive"
             elif -0.3 < analysis.sentiment.polarity <= 0:
                 self.weak_negative += 1
+                tweetSentiment[tweetId] = "Weakly Negative"
             elif -0.6 < analysis.sentiment.polarity <= -0.3:
                 self.negative += 1
+                tweetSentiment[tweetId] = "Negative"
             elif -1 < analysis.sentiment.polarity <= -0.6:
                 self.strong_negative += 1
+                tweetSentiment[tweetId] = "Strongly Negative"
 
         # finding average of how people are reacting
         self.positive = self.percentage(self.positive, self.NoOfTerms)
@@ -52,7 +60,7 @@ class DataAnalysis(object):
         self.polarity = self.polarity / self.NoOfTerms
 
         # printing out data
-        print("How people are reacting on " + search_term + " by analyzing " + str(self.NoOfTerms) + " tweets.")
+        print("How people are reacting on " + searchTerm + " by analyzing " + str(self.NoOfTerms) + " tweets.")
         print("Sentiment Analysis Report: ")
 
         if self.polarity == 0:
@@ -79,6 +87,8 @@ class DataAnalysis(object):
         print(str(self.strong_negative) + "% people thought it was strongly negative")
         print(str(self.neutral) + "% people thought it was neutral")
 
+        return tweetSentiment
+
     # function to calculate percentage
     def percentage(self, part, whole):
         temp = 100 * float(part) / float(whole)
@@ -100,5 +110,5 @@ class DataAnalysis(object):
         plt.tight_layout()
         plt.show()
 
-    #TODO : generate wordcloud for trending tweets in the past 7 days
+    # TODO : generate wordcloud for trending tweets in the past 7 days
     # def generateWordCloud(self):

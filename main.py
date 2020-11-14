@@ -8,29 +8,27 @@ def main():
     print("|Welcome to Sentimental Analysis on Twitter|")
     print("|******************************************|")
     # input for term to be searched and how many tweets to search
-    search_term = input("Enter Keyword/Tag to search about: ")
-    no_of_terms = int(input("Enter how many tweets to search: "))
-    client = TwitterClient()
+    searchTerm = input("Enter Keyword/Tag to search about: ")
+    noOfTerms = int(input("Enter how many tweets to search: "))
+    twitterClient = TwitterClient()
     tools = Tools()
 
-    raw_tweets = client.get_tweets(search_term, no_of_terms)
-    print(raw_tweets)
-
-    cleaned_tweets = tools.clean_tweet(raw_tweets)
-    print(cleaned_tweets)
-
+    rawTweets = twitterClient.get_tweets(searchTerm, noOfTerms)
     # clean the tweets before adding to the dictionary
-    tweets = dict()
-    for tweet_id in cleaned_tweets:
-        tweetLst = list()
-        tweetLst.append(raw_tweets[tweet_id])
-        tweetLst.append(cleaned_tweets[tweet_id])
-        tweets[tweet_id] = tweetLst
-    tools.write_csv(search_term + '.csv', 'w', tweets)
+    cleanedTweets = tools.clean_tweet(rawTweets)
+    dataAnalysis = DataAnalysis(cleanedTweets)
+    tweetSentiment = dataAnalysis.sentimentAnalysis(searchTerm)
 
-    analysis = DataAnalysis(cleaned_tweets)
-    analysis.sentimentAnalysis(search_term)
-    analysis.generatePieChart(search_term)
+    tweetsDict = dict()
+    for tweetId in cleanedTweets:
+        tweetLst = list()
+        tweetLst.append(rawTweets[tweetId])
+        tweetLst.append(cleanedTweets[tweetId])
+        tweetLst.append(tweetSentiment[tweetId])
+        tweetsDict[tweetId] = tweetLst
+    tools.write_csv(searchTerm + '.csv', 'w', tweetsDict)
+
+    dataAnalysis.generatePieChart(searchTerm)
 
 
 if __name__ == "__main__":

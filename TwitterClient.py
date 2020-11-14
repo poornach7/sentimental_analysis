@@ -5,32 +5,33 @@ import pandas as pd
 
 class TwitterClient(object):
     def __init__(self):
-        login_file = 'TwitterLogin.csv'
-        val = pd.read_csv(login_file)
+        loginFile = 'TwitterLogin.csv'
+        val = pd.read_csv(loginFile)
         # keys and tokens from the Twitter Dev Console
-        consumer_key = val['API key'][0]
-        consumer_secret = val['API secret key'][0]
-        access_token = val['Access token'][0]
-        access_token_secret = val['Access token secret'][0]
+        consumerKey = val['API key'][0]
+        consumerSecret = val['API secret key'][0]
+        accessToken = val['Access token'][0]
+        accessTokenSecret = val['Access token secret'][0]
         # attempt authentication
         try:
             # create OAuthHandler object
-            self.auth = OAuthHandler(consumer_key, consumer_secret)
+            self.auth = OAuthHandler(consumerKey, consumerSecret)
             # set access token and secret
-            self.auth.set_access_token(access_token, access_token_secret)
+            self.auth.set_access_token(accessToken, accessTokenSecret)
             # create tweepy API object to fetch tweets
             print("Authentication Success.")
             self.api = tweepy.API(self.auth)
         except:
             print("Error: Authentication Failed")
 
-    def get_tweets(self, search_term, count=10):
-        tweets = dict()
-        fetched_tweets_obj = tweepy.Cursor(self.api.search, q=search_term, lang="en",
-                                           tweet_mode="extended", result_type="mixed").items(count)
-        for tweet in fetched_tweets_obj:
-            tweets[tweet.id] = tweet.full_text
-        return tweets
+    def get_tweets(self, searchTerm, tweetCount=10):
+        tweetsDict = dict()
+        fetchedTweetsObj = tweepy.Cursor(self.api.search, q=searchTerm, lang="en",
+                                         tweet_mode="extended", result_type="mixed").items(tweetCount)
+        for tweet in fetchedTweetsObj:
+            tweetsDict[tweet.id] = tweet.full_text
+        return tweetsDict
 
-    #TODO: Implement a method to fetch tweets from past 7 days and process them to identfy the treandng topic
-    #TODO: Implement a method to fetch tweets from past 7 days in a specific location and process them to identfy the treandng topic at a particualar locaton
+    # TODO: Implement a method to fetch tweets from past 7 days and process them to identify the trending topic TODO:
+    #  Implement a method to fetch tweets from past 7 days in a specific location and process them to identify the
+    #  trending topic at a particular location
