@@ -54,7 +54,7 @@ def main():
                 dataAnalysis.generatePieChart(searchTerm)
             elif ch == 2:
                 print("Data visualisation in Word Cloud")
-                dataAnalysis.generateWordCloud()
+                dataAnalysis.generateWordCloud(searchTerm)
             elif ch == 3:
                 break
             elif ch == 4:

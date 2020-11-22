@@ -112,9 +112,10 @@ class DataAnalysis(object):
         plt.show()
 
     # TODO : generate wordcloud for trending keywords
-    def generateWordCloud(self):
+    def generateWordCloud(self, searchTerm):
         comment_words = ''
         stopwords = set(STOPWORDS)
+        stopwords.add(searchTerm)
         tokenlst = list()
 
     # TODO : Implement a method to Tokenize the tweets and eliminate stopwords in cleanedTweet
