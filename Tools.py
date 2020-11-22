@@ -1,6 +1,9 @@
 import re
 import csv
 
+from nltk.corpus import stopwords
+
+
 class Tools(object):
 
     def clean_tweet(self, tweets):
@@ -38,4 +41,9 @@ class Tools(object):
         except:
             print("Error: Unable to write to csv")
 
+    def stop_word_test(self, test_word):
+        if test_word in stopwords:
+            return 0
+        else:
+            return 1
     # TODO: Tokenize the cleaned tweet using NLTK for better natural language processing

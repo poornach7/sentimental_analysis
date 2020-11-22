@@ -1,5 +1,6 @@
 from textblob import TextBlob
 import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS
 
 
 class DataAnalysis(object):
@@ -110,5 +111,29 @@ class DataAnalysis(object):
         plt.tight_layout()
         plt.show()
 
-    # TODO : generate wordcloud for trending tweets in the past 7 days
-    # def generateWordCloud(self):
+    # TODO : generate wordcloud for trending keywords
+    def generateWordCloud(self):
+        comment_words = ''
+        stopwords = set(STOPWORDS)
+        tokenlst = list()
+
+    # TODO : Implement a method to Tokenize the tweets and eliminate stopwords in cleanedTweet
+        for tweetId in self.tweets:
+            tokens = self.tweets[tweetId].split()
+            tokenlst.append(tokens)
+
+        for tokens in tokenlst:
+            for i in range(len(tokens)):
+                tokens[i] = tokens[i].lower()
+            comment_words += " ".join(tokens) + " "
+
+        wordcloud = WordCloud(width=640, height=480,
+                              background_color='white',
+                              stopwords=stopwords,
+                              min_font_size=10).generate(comment_words)
+        # plot the WordCloud image
+        plt.figure(figsize=(8, 8), facecolor=None)
+        plt.imshow(wordcloud)
+        plt.axis("off")
+        plt.tight_layout(pad=0)
+        plt.show()
