@@ -32,6 +32,6 @@ class TwitterClient(object):
             tweetsDict[tweet.id] = tweet.full_text
         return tweetsDict
 
-    # TODO: Implement a method to fetch tweets from past 7 days and process them to identify the trending topic TODO:
-    #  Implement a method to fetch tweets from past 7 days in a specific location and process them to identify the
+    # TODO: Implement a method to fetch tweets from past 7 days and process them to identify the trending topic
+    # TODO: Implement a method to fetch tweets from past 7 days in a specific location and process them to identify the
     #  trending topic at a particular location
