@@ -1,3 +1,7 @@
+import os
+
+from PIL import Image
+import numpy as np
 from textblob import TextBlob
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
@@ -111,27 +115,23 @@ class DataAnalysis(object):
         plt.tight_layout()
         plt.show()
 
-    # TODO : generate wordcloud for trending keywords
+    # generate wordcloud for trending keywords
     def generateWordCloud(self, searchTerm):
-        comment_words = ''
+        words = ''
         stopwords = set(STOPWORDS)
         stopwords.add(searchTerm)
-        tokenlst = list()
 
-    # TODO : Implement a method to Tokenize the tweets and eliminate stopwords in cleanedTweet
         for tweetId in self.tweets:
             tokens = self.tweets[tweetId].split()
-            tokenlst.append(tokens)
+            words += " ".join(tokens) + " "
 
-        for tokens in tokenlst:
-            for i in range(len(tokens)):
-                tokens[i] = tokens[i].lower()
-            comment_words += " ".join(tokens) + " "
-
-        wordcloud = WordCloud(width=640, height=480,
-                              background_color='white',
+        src_dir = os.getcwd()
+        imagePath = src_dir + "/twitter-logo.jpg"
+        bg = np.array(Image.open(imagePath))
+        wordcloud = WordCloud(width=800, height=800, mask=bg,
+                              background_color='black',
                               stopwords=stopwords,
-                              min_font_size=10).generate(comment_words)
+                              min_font_size=10).generate(words)
         # plot the WordCloud image
         plt.figure(figsize=(8, 8), facecolor=None)
         plt.imshow(wordcloud)
