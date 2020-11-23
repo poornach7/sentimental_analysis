@@ -2,11 +2,12 @@ import re
 import csv
 
 from nltk.corpus import stopwords
+from wordcloud import STOPWORDS
 
 
 class Tools(object):
 
-    def clean_tweet(self, tweets):
+    def clean_tweet(self, tweets, searchTerm):
         cleaned_tweets = dict()
         for tweet_id in tweets:
             # remove @mentions
@@ -23,11 +24,9 @@ class Tools(object):
             cleanTweet = re.sub(r'[ ]+', ' ', cleanTweet)
             cleanTweet = re.sub(r'^[ ]+', '', cleanTweet)
 
-            # TODO: look for anymore special patterns to clean the tweet
-            # shortword = re.compile(r'\W*\b\w{1,3}\b')
-            # cleanTweet = shortword.sub('', cleanTweet)
-            cleanTweet.lower()
             cleaned_tweets[tweet_id] = cleanTweet
+        # remove stopwords
+        cleaned_tweets = self.remove_stopwords(cleaned_tweets, searchTerm)
         return cleaned_tweets
 
     def write_csv(self, file_name, method, tweets):
@@ -40,5 +39,19 @@ class Tools(object):
                 writer.writerow([tweet_id, tweet[0], tweet[1], tweet[2]])
         except:
             print("Error: Unable to write to csv")
+
+    def remove_stopwords(self, cleaned_tweets, searchTerm):
+        stopwords = set(STOPWORDS)
+        stopwords.add(searchTerm)
+
+        for tweetId in cleaned_tweets:
+            cleanTweet = ''
+            tokens = cleaned_tweets[tweetId].split()
+            for i in range(len(tokens)):
+                tokens[i] = tokens[i].lower()
+                if tokens[i] not in stopwords:
+                    cleanTweet += tokens[i] + " "
+            cleaned_tweets[tweetId] = cleanTweet
+        return cleaned_tweets
 
     # TODO: Tokenize the cleaned tweet using NLTK for better natural language processing

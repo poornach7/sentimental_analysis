@@ -32,7 +32,7 @@ def main():
 
             rawTweets = twitterClient.get_tweets(searchTerm, int(noOfTerms))
             # clean the tweets before adding to the dictionary
-            cleanedTweets = tools.clean_tweet(rawTweets)
+            cleanedTweets = tools.clean_tweet(rawTweets, searchTerm)
             dataAnalysis = DataAnalysis(cleanedTweets)
             tweetSentiment = dataAnalysis.sentimentAnalysis(searchTerm)
 
@@ -47,17 +47,17 @@ def main():
             break
 
         while True:
-            ch = int(input("Choose from the below options:\n\t1. Pie Chart\n\t2. Word Cloud\n\t3. Search another "
-                           "keyword\n\t4. Exit\n Enter your choice: "))
-            if ch == 1:
+            ch = input("Choose from the below options:\n\t1. Pie Chart\n\t2. Word Cloud\n\t3. Search another "
+                       "keyword\n\t4. Exit\n Enter your choice: ")
+            if ch == '1':
                 print("Data visualisation in Pie Chart")
                 dataAnalysis.generatePieChart(searchTerm)
-            elif ch == 2:
+            elif ch == '2':
                 print("Data visualisation in Word Cloud")
                 dataAnalysis.generateWordCloud(searchTerm)
-            elif ch == 3:
+            elif ch == '3':
                 break
-            elif ch == 4:
+            elif ch == '4':
                 print("Thank You. Good Bye!")
                 exit(0)
             else:
