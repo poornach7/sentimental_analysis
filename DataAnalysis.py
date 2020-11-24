@@ -48,7 +48,7 @@ class DataAnalysis(object):
             elif -0.6 < analysis.sentiment.polarity <= -0.3:
                 self.negative += 1
                 tweetSentiment[tweetId] = "Negative"
-            elif -1 < analysis.sentiment.polarity <= -0.6:
+            elif -1 <= analysis.sentiment.polarity <= -0.6:
                 self.strong_negative += 1
                 tweetSentiment[tweetId] = "Strongly Negative"
 
@@ -96,8 +96,11 @@ class DataAnalysis(object):
 
     # function to calculate percentage
     def percentage(self, part, whole):
-        temp = 100 * float(part) / float(whole)
-        return format(temp, '.2f')
+        if whole != 0:
+            temp = 100 * float(part) / float(whole)
+            return format(temp, '.2f')
+        else:
+            return 0
 
     def generatePieChart(self, searchTerm):
         labels = ['Positive [' + str(self.positive) + '%]', 'Weakly Positive [' + str(self.weak_positive) + '%]',
