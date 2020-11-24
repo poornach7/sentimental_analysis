@@ -6,12 +6,13 @@ from DataAnalysis import DataAnalysis
 def main():
     # input for term to be searched and how many tweets to search
     tools = Tools()
+    validInput = True
     while True:
         print("|******************************************|")
         print("|Welcome to Sentimental Analysis on Twitter|")
         print("|******************************************|")
         searchTerm = input("Enter Keyword/Tag to search about: ").replace(" ", "")
-        if not searchTerm.isalpha():
+        if searchTerm.isnumeric():
             print("Please enter a valid keyword")
             continue
         elif len(searchTerm) <= 3:
@@ -32,28 +33,38 @@ def main():
 
             rawTweets = twitterClient.get_tweets(searchTerm, int(noOfTerms))
             # clean the tweets before adding to the dictionary
-            cleanedTweets = tools.clean_tweet(rawTweets, searchTerm)
-            dataAnalysis = DataAnalysis(cleanedTweets)
-            tweetSentiment = dataAnalysis.sentimentAnalysis(searchTerm)
+            if len(rawTweets) != 0:
+                cleanedTweets = tools.clean_tweet(rawTweets, searchTerm)
+                dataAnalysis = DataAnalysis(cleanedTweets)
+                tweetSentiment = dataAnalysis.sentimentAnalysis(searchTerm)
 
-            tweetsDict = dict()
-            for tweetId in cleanedTweets:
-                tweetLst = list()
-                tweetLst.append(rawTweets[tweetId])
-                tweetLst.append(cleanedTweets[tweetId])
-                tweetLst.append(tweetSentiment[tweetId])
-                tweetsDict[tweetId] = tweetLst
-            tools.write_csv(searchTerm + '.csv', 'w', tweetsDict)
-            break
+                tweetsDict = dict()
+                for tweetId in cleanedTweets:
+                    tweetLst = list()
+                    tweetLst.append(rawTweets[tweetId])
+                    tweetLst.append(cleanedTweets[tweetId])
+                    tweetLst.append(tweetSentiment[tweetId])
+                    tweetsDict[tweetId] = tweetLst
+                tools.write_csv(searchTerm + '.csv', 'w', tweetsDict)
+                validInput = True
+                break
+            else:
+                print("No tweets found. Please try searching another trending keyword.\n")
+                validInput = False
+                break
+        if not validInput:
+            continue
 
         while True:
             ch = input("Choose from the below options:\n\t1. Pie Chart\n\t2. Word Cloud\n\t3. Search another "
-                       "keyword\n\t4. Exit\n Enter your choice: ")
+                       "keyword\n\t4. Exit\nEnter your choice: ")
             if ch == '1':
                 print("Data visualisation in Pie Chart")
+                print("Loading...")
                 dataAnalysis.generatePieChart(searchTerm)
             elif ch == '2':
-                print("Data visualisation in Word Cloud")
+                print("Data visualisation in Word Cloud\n")
+                print("Loading...")
                 dataAnalysis.generateWordCloud(searchTerm)
             elif ch == '3':
                 break
