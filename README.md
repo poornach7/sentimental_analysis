@@ -38,6 +38,9 @@ main.py - is the main program.
 <li>Tweepy</li>
 <li>Textblob</li>
 <li>Matplotlib</li>
+<li>numpy</li>
+<li>wordcloud</li>
+<li>pandas</li>
 </ul>
 
 ## Authors
